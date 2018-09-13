@@ -8,7 +8,7 @@ exports.getStudentsByClassId = ( id , done) => {
 }
 
 exports.getStudentById = (id, done) => {
-    db.get().query('select * from info_student where idinfo_student = ?', [id], (err, result) => {
+    db.get().query('select dni, address, phone, email, name, surname, picture, idusers from info_student, users where idinfo_student = idusers AND idinfo_student = ?', [id], (err, result) => {
         if (err) return done(err)
         done(null, result)
     })
