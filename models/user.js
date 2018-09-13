@@ -12,7 +12,7 @@ exports.updateToken = (token, user_id, done) => {
   console.log(token, user_id)
   db.get().query('UPDATE users SET token=? WHERE idusers=?', [token, user_id], (err, result) => {
     if (err) return done(err)
-    done(null, result )
+    done(null, result)
   })
 }
 
@@ -22,3 +22,4 @@ exports.register = ({ email, password, name, surname, type }, done) => {
     done(null, result)
   })
 }
+
