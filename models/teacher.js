@@ -13,3 +13,17 @@ exports.getClassesFromTeacherById = (teacher_id, done) => {
     done(null, rows)
   })
 }
+
+exports.getAll = (done) => {
+  db.get().query('select * from info_teacher it, users u where it.fk_user_id = u.idusers', (err, rows) => {
+    if (err) return done(err)
+    done(null, rows)    
+  })
+}
+
+exports.addTeacherToClass = (id_teacher, id_class, done) => {
+  db.get().query('insert into class_teacher values (?, ?, ?)', [null, id_class, id_teacher], (err, result) => {
+    if (err) return done(err)
+    done(null, result)
+  })
+}

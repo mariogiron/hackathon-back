@@ -23,3 +23,10 @@ exports.register = ({ email, password, name, surname, type }, done) => {
   })
 }
 
+exports.getInfo = (token, done) => {
+  db.get().query('SELECT * FROM users WHERE token=?', [token], (err, rows) => {
+    if (err) return done(err)
+    done(null, rows)
+  })
+}
+
