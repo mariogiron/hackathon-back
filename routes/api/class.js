@@ -57,7 +57,8 @@ router.post('/new', (req, res) => {
 })
 
 // http://localhost:3000/api/class/5
-router.get('/:id', (req, res) => {
+router.post('/:id', (req, res) => {
+    let current_date = req.body.fecha ? req.body.fecha : new Date()
     modelClass.getClassInfo(req.params.id, (err, rows) => {
         if (err) return res.json({
             err: err
@@ -68,7 +69,22 @@ router.get('/:id', (req, res) => {
                 err: err
             })
             clase.students = rows
-            res.json(clase)
+            let students_id = clase.students.map(item => item.idusers)
+            modelStudents.getIncidentsByDate(current_date, students_id, (err, rows) => {
+                if (err) return res.json({ err: err })
+                console.log(rows)
+                clase.students.forEach(student => {     
+                    student.incident_type = -1
+                    student.comments = ''
+                    let incidencia = rows.filter(i => i.fk_user_id == student.idusers)                     
+                    if (incidencia.length > 0) {
+                        student.incident_type = incidencia[0].type
+                        student.comments = incidencia[0].comment == null ? '' : incidencia[0].comment
+                        console.log(incidencia)
+                    }
+                });
+                res.json(clase)
+            })            
         })
     })
 })
