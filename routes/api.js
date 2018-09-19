@@ -4,7 +4,7 @@ var router = express.Router();
 const usersRouter = require('./api/users')
 const teachersRouter = require('./api/teachers')
 const classesRouter = require('./api/class')
-const studentsRouter = require('./api/class')
+const studentsRouter = require('./api/students')
 
 router.use('/users', usersRouter)
 router.use('/teachers', teachersRouter)

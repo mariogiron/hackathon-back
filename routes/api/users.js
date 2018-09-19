@@ -16,7 +16,7 @@ router.post('/login', (req, res) => {
           let token = utils.generateToken(12)
           modelUser.updateToken(token, rows[0].idusers, (err, result) => {            
             if (err) return res.json({ err: 'Se ha producido un error con el usuario o la contraseña' })
-            res.json({ token: token })
+            res.json({ token: token, type: rows[0].type })
           })
         } else {
           res.json({ err: 'Se ha producido un error con el usuario o la contraseña' })

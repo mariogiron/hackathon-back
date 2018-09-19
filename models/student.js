@@ -23,3 +23,17 @@ exports.getIncidentsByDate = (date, students, done) => {
         done(null, rows)
     })
 }
+
+exports.updateStatus = (alumno_id, falta, fecha_cambio, done) => {    
+    if (!falta) {
+        db.get().query('delete from student_incidents where date_incident = ? and fk_user_id = ?', [fecha_cambio, alumno_id], (err, result) => {
+            if (err) done(err)
+            done(null, result)
+        })
+    } else {
+        db.get().query('insert into student_incidents (date_incident, type, fk_user_id) values (?, ?, ?)', [fecha_cambio, '0', alumno_id], (err, result) => {
+            if (err) done(err)
+            done(null, result)
+        })
+    }
+}
